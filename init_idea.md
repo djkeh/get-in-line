@@ -121,3 +121,11 @@
 ## 뷰
 
 * 시작 페이지, 메인 페이지, 관리자 마이 페이지, 장소 페이지, 줄서기 이벤트 페이지
+
+
+## Reference
+
+* use case: https://lucid.app/documents/view/84f152f2-e4d8-44a9-a76e-4b103cfcef96
+* erd: https://lucid.app/documents/view/7ddcf421-31cf-4a3f-8f07-d92c6e2cabd8
+* api endpoints: https://docs.google.com/spreadsheets/d/1tNbpM_VCpszoPND6e6l00S_QfCPyeK1D2G3kkQEVZuc/edit?usp=sharing
+
