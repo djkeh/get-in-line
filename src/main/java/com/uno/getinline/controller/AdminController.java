@@ -2,6 +2,9 @@ package com.uno.getinline.controller;
 
 import com.uno.getinline.constant.EventStatus;
 import com.uno.getinline.constant.PlaceType;
+import com.uno.getinline.dto.EventDTO;
+import com.uno.getinline.dto.PlaceDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,17 +34,29 @@ public class AdminController {
     }
 
     @GetMapping("/places/{placeId}")
-    public String adminPlaceDetail(@PathVariable Integer placeId) {
-        return "admin/place-detail";
+    public ModelAndView adminPlaceDetail(@PathVariable Long placeId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("place", PlaceDTO.of(
+                PlaceType.COMMON,
+                "랄라배드민턴장",
+                "서울시 강남구 강남대로 1234",
+                "010-1234-5678",
+                30,
+                "신장개업",
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        ));
+
+        return new ModelAndView("admin/place-detail", map);
     }
 
     @GetMapping("/events")
     public ModelAndView adminEvents(
-            Integer placeId,
+            Long placeId,
             String eventName,
             EventStatus eventStatus,
-            LocalDateTime eventStartDatetime,
-            LocalDateTime eventEndDatetime
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventStartDatetime,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventEndDatetime
     ) {
         Map<String, Object> map = new HashMap<>();
         map.put("placeName", "place-" + placeId);
@@ -54,8 +69,22 @@ public class AdminController {
     }
 
     @GetMapping("/events/{eventId}")
-    public String adminEventDetail(@PathVariable Integer eventId) {
-        return "admin/event-detail";
+    public ModelAndView adminEventDetail(@PathVariable Long eventId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("event", EventDTO.of(
+                1L,
+                "오후 운동",
+                EventStatus.OPENED,
+                LocalDateTime.of(2021, 1, 1, 13, 0, 0),
+                LocalDateTime.of(2021, 1, 1, 16, 0, 0),
+                0,
+                24,
+                "마스크 꼭 착용하세요",
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        ));
+
+        return new ModelAndView("admin/event-detail", map);
     }
 
 }
