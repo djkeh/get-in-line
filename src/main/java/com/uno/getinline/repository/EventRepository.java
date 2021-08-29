@@ -16,7 +16,7 @@ public interface EventRepository {
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
             LocalDateTime eventEndDatetime
-    ) { return null; }
+    ) { return List.of(); }
     default Optional<EventDTO> findEvent(Long eventId) { return Optional.empty(); }
     default boolean insertEvent(EventDTO eventDTO) { return false; }
     default boolean updateEvent(Long eventId, EventDTO dto) { return false; }
