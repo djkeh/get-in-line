@@ -17,7 +17,8 @@ public enum ErrorCode {
     VALIDATION_ERROR(10002, ErrorCategory.CLIENT_SIDE, "Validation error"),
 
     INTERNAL_ERROR(20000, ErrorCategory.SERVER_SIDE, "Internal error"),
-    SPRING_INTERNAL_ERROR(20001, ErrorCategory.SERVER_SIDE, "Spring-detected internal error")
+    SPRING_INTERNAL_ERROR(20001, ErrorCategory.SERVER_SIDE, "Spring-detected internal error"),
+    DATA_ACCESS_ERROR(20002, ErrorCategory.SERVER_SIDE, "Data access error")
     ;
 
     private final Integer code;
