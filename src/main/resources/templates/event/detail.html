@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
-This is event detail page.
+<p>
+  <span id="eventTitle">This is events page.</span>
+</p>
+<table id="eventTable">
+  <tbody>
+    <tr>
+      <td>장소 ID</td>
+      <td><span id="placeId">?</span></td>
+    </tr>
+    <tr>
+      <td>이벤트명</td>
+      <td><span id="eventName">?</span></td>
+    </tr>
+    <tr>
+      <td>이벤트 상태</td>
+      <td><span id="eventStatus">?</span></td>
+    </tr>
+    <tr>
+      <td>시작 일시</td>
+      <td><span id="eventStartDatetime">?</span></td>
+    </tr>
+    <tr>
+      <td>종료 일시</td>
+      <td><span id="eventEndDatetime">?</span></td>
+    </tr>
+    <tr>
+      <td>현재 인원</td>
+      <td><span id="currentNumberOfPeople">?</span></td>
+    </tr>
+    <tr>
+      <td>최대 수용 인원</td>
+      <td><span id="capacity">?</span></td>
+    </tr>
+    <tr>
+      <td><label for="memo">메모</label></td>
+      <td><textarea id="memo" readonly></textarea></td>
+    </tr>
+  </tbody>
+</table>
+<a id="backToEvents" type="button">취소</a>
 </body>
 </html>

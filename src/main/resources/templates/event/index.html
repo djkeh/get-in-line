@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
-This is events page.
+<p>
+  <span id="eventsTitle">This is events page.</span>
+</p>
+<table id="eventsTable">
+  <thead>
+    <tr>
+      <th>장소 ID</th>
+      <th>이벤트명</th>
+      <th>이벤트 상태</th>
+      <th>시작 일시</th>
+      <th>종료 일시</th>
+      <th>현재 인원</th>
+      <th>최대 수용 인원</th>
+      <th>상세</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="placeId">1</td>
+      <td class="eventName">테스트 이벤트</td>
+      <td class="eventStatus">OPENED</td>
+      <td class="eventStartDatetime">2021-01-01 09:00:00</td>
+      <td class="eventEndDatetime">2021-01-01 10:00:00</td>
+      <td class="currentNumberOfPeople">0</td>
+      <td class="capacity">10</td>
+      <td><a>상세</a></td>
+    </tr>
+  </tbody>
+</table>
 </body>
 </html>
