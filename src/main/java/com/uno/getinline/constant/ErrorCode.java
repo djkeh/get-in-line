@@ -26,7 +26,7 @@ public enum ErrorCode {
     private final String message;
 
 
-    public String getMessage(Exception e) {
+    public String getMessage(Throwable e) {
         return this.getMessage(this.getMessage() + " - " + e.getMessage());
     }
 

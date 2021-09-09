@@ -13,9 +13,9 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ErrorCodeTest {
 
-    @ParameterizedTest(name = "[{index}] {0} ===> {1}")
-    @MethodSource
     @DisplayName("예외를 받으면, 예외 메시지가 포함된 메시지 출력")
+    @MethodSource
+    @ParameterizedTest(name = "[{index}] {0} ===> {1}")
     void givenExceptionWithMessage_whenGettingMessage_thenReturnsMessage(ErrorCode sut, String expected) {
         // Given
         Exception e = new Exception("This is test message.");
@@ -39,9 +39,9 @@ class ErrorCodeTest {
         );
     }
 
-    @ParameterizedTest(name = "[{index}] \"{0}\" ===> \"{1}\"")
-    @MethodSource
     @DisplayName("에러 메시지를 받으면, 해당 에러 메시지로 출력")
+    @MethodSource
+    @ParameterizedTest(name = "[{index}] \"{0}\" ===> \"{1}\"")
     void givenMessage_whenGettingMessage_thenReturnsMessage(String input, String expected) {
         // Given
 

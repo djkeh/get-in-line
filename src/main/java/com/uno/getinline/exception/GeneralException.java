@@ -9,27 +9,22 @@ public class GeneralException extends RuntimeException {
     private final ErrorCode errorCode;
 
     public GeneralException() {
-        super();
+        super(ErrorCode.INTERNAL_ERROR.getMessage());
         this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(String message) {
-        super(message);
+        super(ErrorCode.INTERNAL_ERROR.getMessage(message));
         this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(String message, Throwable cause) {
-        super(message, cause);
+        super(ErrorCode.INTERNAL_ERROR.getMessage(message), cause);
         this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(Throwable cause) {
-        super(cause);
-        this.errorCode = ErrorCode.INTERNAL_ERROR;
-    }
-
-    public GeneralException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+        super(ErrorCode.INTERNAL_ERROR.getMessage(cause));
         this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
@@ -39,13 +34,8 @@ public class GeneralException extends RuntimeException {
     }
 
     public GeneralException(ErrorCode errorCode, Throwable cause) {
-        super(errorCode.getMessage(), cause);
+        super(errorCode.getMessage(cause), cause);
         this.errorCode = errorCode;
-    }
-
-    public GeneralException(ErrorCode errorCode, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(errorCode.getMessage(), cause, enableSuppression, writableStackTrace);
-        this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
 }
