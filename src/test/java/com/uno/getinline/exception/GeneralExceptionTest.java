@@ -11,9 +11,10 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+@DisplayName("에러 처리 - 기본 예외")
 class GeneralExceptionTest {
 
-    @DisplayName("")
+    @DisplayName("예외 생성 시 기본 메시지, 에러 코드")
     @MethodSource
     @ParameterizedTest(name = "[{index}] message({2}) => \"{1}\"")
     void givenException_whenInstantiating_thenContainsRelevantInformation(Throwable input, String expectedMessage, ErrorCode expectedErrorCode) {
