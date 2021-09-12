@@ -12,38 +12,38 @@
   <tbody>
     <tr>
       <td>장소 ID</td>
-      <td><span id="placeId">?</span></td>
+      <td>${event.placeId()!"?"}</td>
     </tr>
     <tr>
       <td>이벤트명</td>
-      <td><span id="eventName">?</span></td>
+      <td>${event.eventName()!"?"}</td>
     </tr>
     <tr>
       <td>이벤트 상태</td>
-      <td><span id="eventStatus">?</span></td>
+      <td>${event.eventStatus()!"?"}</td>
     </tr>
     <tr>
       <td>시작 일시</td>
-      <td><span id="eventStartDatetime">?</span></td>
+      <td>${event.eventStartDatetime()!"?"}</td>
     </tr>
     <tr>
       <td>종료 일시</td>
-      <td><span id="eventEndDatetime">?</span></td>
+      <td>${event.eventEndDatetime()!"?"}</td>
     </tr>
     <tr>
       <td>현재 인원</td>
-      <td><span id="currentNumberOfPeople">?</span></td>
+      <td>${event.currentNumberOfPeople()!"?"}</td>
     </tr>
     <tr>
       <td>최대 수용 인원</td>
-      <td><span id="capacity">?</span></td>
+      <td>${event.capacity()!"?"}</td>
     </tr>
     <tr>
       <td><label for="memo">메모</label></td>
-      <td><textarea id="memo" readonly></textarea></td>
+      <td><textarea id="memo" readonly>${event.memo()!"-"}</textarea></td>
     </tr>
   </tbody>
 </table>
-<a id="backToEvents" type="button">취소</a>
+<a href="/events" type="button">취소</a>
 </body>
 </html>

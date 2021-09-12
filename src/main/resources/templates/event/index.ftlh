@@ -22,16 +22,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="placeId">1</td>
-      <td class="eventName">테스트 이벤트</td>
-      <td class="eventStatus">OPENED</td>
-      <td class="eventStartDatetime">2021-01-01 09:00:00</td>
-      <td class="eventEndDatetime">2021-01-01 10:00:00</td>
-      <td class="currentNumberOfPeople">0</td>
-      <td class="capacity">10</td>
-      <td><a>상세</a></td>
-    </tr>
+    <#list events as event>
+      <tr>
+        <td>${event.placeId()!"-"}</td>
+        <td>${event.eventName()!"-"}</td>
+        <td>${event.eventStatus()!"-"}</td>
+        <td>${event.eventStartDatetime()!"-"}</td>
+        <td>${event.eventEndDatetime()!"-"}</td>
+        <td>${event.currentNumberOfPeople()!"0"}</td>
+        <td>${event.capacity()!"-"}</td>
+        <td><a href="/events/${event.id()}">상세</a></td>
+      </tr>
+    </#list>
   </tbody>
 </table>
 </body>
