@@ -2,14 +2,14 @@
 <thlogic>
   <attr sel="#eventTitle" th:text="'이벤트 상세'" />
   <attr sel="#eventTable" th:object="${event}">
-    <attr sel="#placeId" th:text="*{placeId}" />
-    <attr sel="#eventName" th:text="*{eventName}" />
-    <attr sel="#eventStatus" th:text="*{eventStatus}" />
-    <attr sel="#eventStartDatetime" th:text="*{eventStartDatetime}" />
-    <attr sel="#eventEndDatetime" th:text="*{eventEndDatetime}" />
-    <attr sel="#currentNumberOfPeople" th:text="*{currentNumberOfPeople}" />
-    <attr sel="#capacity" th:text="*{capacity}" />
-    <attr sel="#memo" th:text="*{memo}" />
+    <attr sel="#placeId" th:text="*{placeId} ?: _" />
+    <attr sel="#eventName" th:text="*{eventName} ?: _" />
+    <attr sel="#eventStatus" th:text="*{eventStatus} ?: _" />
+    <attr sel="#eventStartDatetime" th:text="*{eventStartDatetime} ?: _" />
+    <attr sel="#eventEndDatetime" th:text="*{eventEndDatetime} ?: _" />
+    <attr sel="#currentNumberOfPeople" th:text="*{currentNumberOfPeople} ?: _" />
+    <attr sel="#capacity" th:text="*{capacity} ?: _" />
+    <attr sel="#memo" th:text="*{memo} ?: _" />
   </attr>
   <attr sel="#backToEvents" th:href="@{/events}" />
 </thlogic>
