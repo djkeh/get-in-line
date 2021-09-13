@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<p>
+  <span>This is events page.</span>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>장소 ID</th>
+      <th>이벤트명</th>
+      <th>이벤트 상태</th>
+      <th>시작 일시</th>
+      <th>종료 일시</th>
+      <th>현재 인원</th>
+      <th>최대 수용 인원</th>
+      <th>상세</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#events}}
+      <tr>
+        <td>{{placeId}}</td>
+        <td>{{eventName}}</td>
+        <td>{{eventStatus}}</td>
+        <td>{{eventStartDatetime}}</td>
+        <td>{{eventEndDatetime}}</td>
+        <td>{{currentNumberOfPeople}}</td>
+        <td>{{capacity}}</td>
+        <td><a href="/events/{{id}}">상세</a></td>
+      </tr>
+    {{/events}}
+  </tbody>
+</table>
+</body>
+</html>
