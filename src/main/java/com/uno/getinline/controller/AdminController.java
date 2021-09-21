@@ -2,8 +2,8 @@ package com.uno.getinline.controller;
 
 import com.uno.getinline.constant.EventStatus;
 import com.uno.getinline.constant.PlaceType;
-import com.uno.getinline.dto.EventDTO;
-import com.uno.getinline.dto.PlaceDTO;
+import com.uno.getinline.dto.EventDto;
+import com.uno.getinline.dto.PlaceDto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +36,7 @@ public class AdminController {
     @GetMapping("/places/{placeId}")
     public ModelAndView adminPlaceDetail(@PathVariable Long placeId) {
         Map<String, Object> map = new HashMap<>();
-        map.put("place", PlaceDTO.of(
+        map.put("place", PlaceDto.of(
                 PlaceType.COMMON,
                 "랄라배드민턴장",
                 "서울시 강남구 강남대로 1234",
@@ -71,7 +71,7 @@ public class AdminController {
     @GetMapping("/events/{eventId}")
     public ModelAndView adminEventDetail(@PathVariable Long eventId) {
         Map<String, Object> map = new HashMap<>();
-        map.put("event", EventDTO.of(
+        map.put("event", EventDto.of(
                 eventId,
                 1L,
                 "오후 운동",

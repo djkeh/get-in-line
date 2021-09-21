@@ -1,7 +1,6 @@
 package com.uno.getinline.controller;
 
-import com.uno.getinline.domain.Event;
-import com.uno.getinline.dto.EventDTO;
+import com.uno.getinline.dto.EventDto;
 import com.uno.getinline.service.EventService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +53,7 @@ class EventControllerTest {
         // Given
         long eventId = 1L;
         given(eventService.getEvent(eventId)).willReturn(Optional.of(
-                EventDTO.of(eventId, null, null, null, null, null, null, null, null, null, null)
+                EventDto.of(eventId, null, null, null, null, null, null, null, null, null, null)
         ));
 
         // When & Then

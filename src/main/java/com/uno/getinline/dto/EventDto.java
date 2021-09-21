@@ -5,7 +5,7 @@ import com.uno.getinline.domain.Event;
 
 import java.time.LocalDateTime;
 
-public record EventDTO(
+public record EventDto(
         Long id,
         Long placeId,
         String eventName,
@@ -19,7 +19,7 @@ public record EventDTO(
         LocalDateTime modifiedAt
 ) {
 
-    public static EventDTO of(
+    public static EventDto of(
             Long id,
             Long placeId,
             String eventName,
@@ -32,7 +32,7 @@ public record EventDTO(
             LocalDateTime createdAt,
             LocalDateTime modifiedAt
     ) {
-        return new EventDTO(
+        return new EventDto(
                 id,
                 placeId,
                 eventName,
@@ -47,8 +47,8 @@ public record EventDTO(
         );
     }
 
-    public static EventDTO of(Event event) {
-        return new EventDTO(
+    public static EventDto of(Event event) {
+        return new EventDto(
                 event.getId(),
                 event.getPlaceId(),
                 event.getEventName(),

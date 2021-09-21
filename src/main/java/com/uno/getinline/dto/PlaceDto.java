@@ -4,7 +4,7 @@ import com.uno.getinline.constant.PlaceType;
 
 import java.time.LocalDateTime;
 
-public record PlaceDTO(
+public record PlaceDto(
         PlaceType placeType,
         String placeName,
         String address,
@@ -14,7 +14,7 @@ public record PlaceDTO(
         LocalDateTime createdAt,
         LocalDateTime modifiedAt
 ) {
-    public static PlaceDTO of(
+    public static PlaceDto of(
             PlaceType placeType,
             String placeName,
             String address,
@@ -24,6 +24,6 @@ public record PlaceDTO(
             LocalDateTime createdAt,
             LocalDateTime modifiedAt
     ) {
-        return new PlaceDTO(placeType, placeName, address, phoneNumber, capacity, memo, createdAt, modifiedAt);
+        return new PlaceDto(placeType, placeName, address, phoneNumber, capacity, memo, createdAt, modifiedAt);
     }
 }

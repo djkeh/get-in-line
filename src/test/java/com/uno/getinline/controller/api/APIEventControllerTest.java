@@ -3,7 +3,7 @@ package com.uno.getinline.controller.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uno.getinline.constant.ErrorCode;
 import com.uno.getinline.constant.EventStatus;
-import com.uno.getinline.dto.EventDTO;
+import com.uno.getinline.dto.EventDto;
 import com.uno.getinline.dto.EventResponse;
 import com.uno.getinline.service.EventService;
 import org.junit.jupiter.api.Disabled;
@@ -326,8 +326,8 @@ class APIEventControllerTest {
     }
 
 
-    private EventDTO createEventDTO() {
-        return EventDTO.of(
+    private EventDto createEventDTO() {
+        return EventDto.of(
                 1L,
                 1L,
                 "오후 운동",
