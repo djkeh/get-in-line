@@ -20,31 +20,35 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
-        return handleExceptionInternal(e, ErrorCode.VALIDATION_ERROR, HttpHeaders.EMPTY, request);
+        return handleExceptionInternal(e, ErrorCode.VALIDATION_ERROR, request);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> general(GeneralException e, WebRequest request) {
-        return handleExceptionInternal(e, e.getErrorCode(), HttpHeaders.EMPTY, request);
+        return handleExceptionInternal(e, e.getErrorCode(), request);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
-        return handleExceptionInternal(e, ErrorCode.INTERNAL_ERROR, HttpHeaders.EMPTY, request);
+        return handleExceptionInternal(e, ErrorCode.INTERNAL_ERROR, request);
     }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleExceptionInternal(ex, ErrorCode.valueOf(status), headers, request);
+        return handleExceptionInternal(ex, ErrorCode.valueOf(status), headers, status, request);
     }
 
 
-    private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, HttpHeaders headers, WebRequest request) {
+    private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, WebRequest request) {
+        return handleExceptionInternal(e, errorCode, HttpHeaders.EMPTY, errorCode.getHttpStatus(), request);
+    }
+
+    private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return super.handleExceptionInternal(
                 e,
                 ApiErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
                 headers,
-                errorCode.getHttpStatus(),
+                status,
                 request
         );
     }
