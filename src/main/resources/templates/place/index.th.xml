@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<thlogic>
+  <attr sel="#placesTitle" th:text="'장소 목록'" />
+  <attr sel="#placesTable">
+    <attr sel="tbody">
+      <attr sel="tr[0]" th:each="place : ${places}">
+        <attr sel="td.placeName" th:text="${place.placeName}" />
+        <attr sel="td.phoneNumber" th:text="${place.phoneNumber}" />
+        <attr sel="td/a" th:text="'상세'" th:href="@{'/places/' + ${place.id}}" />
+      </attr>
+    </attr>
+  </attr>
+</thlogic>
