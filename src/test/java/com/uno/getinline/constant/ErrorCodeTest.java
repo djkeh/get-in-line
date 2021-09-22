@@ -1,14 +1,17 @@
 package com.uno.getinline.constant;
 
+import com.uno.getinline.exception.GeneralException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.HttpStatus;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @DisplayName("에러 처리 - 에러 코드")
@@ -73,6 +76,54 @@ class ErrorCodeTest {
 
         // Then
         assertThat(result).isEqualTo("INTERNAL_ERROR (20000)");
+    }
+
+    @DisplayName("HttpStatus 에 대응하는 ErrorCode 찾기 - 정상")
+    @MethodSource
+    @ParameterizedTest(name = "[{index}] {0} ===> {1}")
+    void givenHttpStatus_whenGettingErrorCode_thenReturnsErrorCode(HttpStatus httpStatus, ErrorCode expected) {
+        // Given
+
+        // When
+        ErrorCode actual = ErrorCode.valueOf(httpStatus);
+
+        // Then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> givenHttpStatus_whenGettingErrorCode_thenReturnsErrorCode() {
+        return Stream.of(
+                // 정의된 값
+                arguments(HttpStatus.OK, ErrorCode.OK),
+                arguments(HttpStatus.BAD_REQUEST, ErrorCode.BAD_REQUEST),
+                arguments(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_ERROR),
+
+                // 정의되지 않은 값
+                arguments(HttpStatus.CONTINUE, ErrorCode.OK),
+                arguments(HttpStatus.ACCEPTED, ErrorCode.OK),
+                arguments(HttpStatus.MULTI_STATUS, ErrorCode.OK),
+                arguments(HttpStatus.MOVED_PERMANENTLY, ErrorCode.OK),
+                arguments(HttpStatus.CONFLICT, ErrorCode.BAD_REQUEST),
+                arguments(HttpStatus.EXPECTATION_FAILED, ErrorCode.BAD_REQUEST),
+                arguments(HttpStatus.BAD_GATEWAY, ErrorCode.INTERNAL_ERROR),
+                arguments(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED, ErrorCode.INTERNAL_ERROR)
+        );
+    }
+
+    @DisplayName("HttpStatus 에 대응하는 ErrorCode 찾기 - Null 처리")
+    @Test
+    void givenUnknownHttpStatus_whenGettingErrorCode_thenReturnsErrorCode() {
+        // Given
+        HttpStatus nullStatus = null;
+
+        // When
+        Throwable t = catchThrowable(() -> ErrorCode.valueOf(nullStatus));
+
+        // Then
+        assertThat(t)
+                .isInstanceOf(GeneralException.class)
+                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INTERNAL_ERROR)
+                .hasMessage("HttpStatus is null.");
     }
 
 }
