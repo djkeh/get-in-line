@@ -63,7 +63,6 @@ class EventControllerTest {
                 .andExpect(view().name("event/detail"))
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists("event"));
-
         then(eventService).should().getEvent(eventId);
     }
 
@@ -79,7 +78,6 @@ class EventControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("error"));
-
         then(eventService).should().getEvent(eventId);
     }
 
