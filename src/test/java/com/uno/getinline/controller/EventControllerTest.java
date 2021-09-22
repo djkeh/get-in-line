@@ -76,7 +76,7 @@ class EventControllerTest {
 
         // When & Then
         mvc.perform(get("/events/" + eventId))
-                .andExpect(status().isBadRequest()) // TODO: 나중에 404로 바꿔보자
+                .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("error"));
 

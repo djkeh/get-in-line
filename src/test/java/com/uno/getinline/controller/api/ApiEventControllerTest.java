@@ -30,15 +30,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Deprecated
 @Disabled("API 컨트롤러가 필요없는 상황이어서 비활성화")
 @DisplayName("API 컨트롤러 - 이벤트")
-@WebMvcTest(APIEventController.class)
-class APIEventControllerTest {
+@WebMvcTest(ApiEventController.class)
+class ApiEventControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper;
 
     @MockBean private EventService eventService;
 
-    public APIEventControllerTest(
+    public ApiEventControllerTest(
             @Autowired MockMvc mvc,
             @Autowired ObjectMapper mapper
     ) {

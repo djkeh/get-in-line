@@ -18,13 +18,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Deprecated
 @Disabled("API 컨트롤러가 필요없는 상황이어서 비활성화")
 @DisplayName("API 컨트롤러 - 인증")
-@WebMvcTest(APIAuthController.class)
-class APIAuthControllerTest {
+@WebMvcTest(ApiAuthController.class)
+class ApiAuthControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper;
 
-    public APIAuthControllerTest(
+    public ApiAuthControllerTest(
             @Autowired MockMvc mvc,
             @Autowired ObjectMapper mapper
     ) {
