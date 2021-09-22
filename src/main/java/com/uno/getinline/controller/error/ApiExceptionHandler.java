@@ -1,7 +1,7 @@
 package com.uno.getinline.controller.error;
 
 import com.uno.getinline.constant.ErrorCode;
-import com.uno.getinline.dto.APIErrorResponse;
+import com.uno.getinline.dto.ApiErrorResponse;
 import com.uno.getinline.exception.GeneralException;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
@@ -42,7 +42,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, HttpHeaders headers, WebRequest request) {
         return super.handleExceptionInternal(
                 e,
-                APIErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
+                ApiErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
                 headers,
                 errorCode.getHttpStatus(),
                 request

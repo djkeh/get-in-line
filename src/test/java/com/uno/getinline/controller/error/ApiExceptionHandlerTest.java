@@ -1,7 +1,7 @@
 package com.uno.getinline.controller.error;
 
 import com.uno.getinline.constant.ErrorCode;
-import com.uno.getinline.dto.APIErrorResponse;
+import com.uno.getinline.dto.ApiErrorResponse;
 import com.uno.getinline.exception.GeneralException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +41,7 @@ class ApiExceptionHandlerTest {
 
         // Then
         assertThat(response)
-                .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, ErrorCode.VALIDATION_ERROR, e))
+                .hasFieldOrPropertyWithValue("body", ApiErrorResponse.of(false, ErrorCode.VALIDATION_ERROR, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.BAD_REQUEST);
     }
@@ -58,7 +58,7 @@ class ApiExceptionHandlerTest {
 
         // Then
         assertThat(response)
-                .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, errorCode, e))
+                .hasFieldOrPropertyWithValue("body", ApiErrorResponse.of(false, errorCode, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -74,7 +74,7 @@ class ApiExceptionHandlerTest {
 
         // Then
         assertThat(response)
-                .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, ErrorCode.INTERNAL_ERROR, e))
+                .hasFieldOrPropertyWithValue("body", ApiErrorResponse.of(false, ErrorCode.INTERNAL_ERROR, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
     }
