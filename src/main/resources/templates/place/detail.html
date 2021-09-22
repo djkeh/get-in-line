@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>장소</title>
 </head>
 <body>
-This is place detail page.
+<p>
+  <span id="placeTitle">This is place detail page.</span>
+</p>
+<table id="placeTable">
+  <tbody>
+  <tr>
+    <td>장소 유형</td>
+    <td><span id="placeType">?</span></td>
+  </tr>
+  <tr>
+    <td>장소 이름</td>
+    <td><span id="placeName">?</span></td>
+  </tr>
+  <tr>
+    <td>주소</td>
+    <td><span id="address">?</span></td>
+  </tr>
+  <tr>
+    <td>전화번호</td>
+    <td><span id="phoneNumber">?</span></td>
+  </tr>
+  <tr>
+    <td>수용 인원</td>
+    <td><span id="capacity">?</span></td>
+  </tr>
+  <tr>
+    <td><label for="memo">메모</label></td>
+    <td><textarea id="memo" readonly></textarea></td>
+  </tr>
+  </tbody>
+</table>
+<a id="backToPlaces" type="button">취소</a>
 </body>
 </html>

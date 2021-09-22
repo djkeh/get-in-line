@@ -37,6 +37,7 @@ public class AdminController {
     public ModelAndView adminPlaceDetail(@PathVariable Long placeId) {
         Map<String, Object> map = new HashMap<>();
         map.put("place", PlaceDto.of(
+                placeId,
                 PlaceType.COMMON,
                 "랄라배드민턴장",
                 "서울시 강남구 강남대로 1234",
