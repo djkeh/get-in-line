@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Event {
 
-    @Setter(AccessLevel.PRIVATE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
