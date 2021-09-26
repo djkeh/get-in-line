@@ -16,7 +16,6 @@ import java.util.Objects;
 @Getter
 @ToString
 @Table(indexes = {
-        @Index(columnList = "placeId"),
         @Index(columnList = "eventName"),
         @Index(columnList = "eventStartDatetime"),
         @Index(columnList = "eventEndDatetime"),
@@ -33,8 +32,8 @@ public class Event {
 
 
     @Setter
-    @Column(nullable = false)
-    private Long placeId;
+    @ManyToOne(optional = false)
+    private Place place;
 
     @Setter
     @Column(nullable = false)
@@ -78,7 +77,7 @@ public class Event {
     protected Event() {}
 
     protected Event(
-            Long placeId,
+            Place place,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -87,7 +86,7 @@ public class Event {
             Integer capacity,
             String memo
     ) {
-        this.placeId = placeId;
+        this.place = place;
         this.eventName = eventName;
         this.eventStatus = eventStatus;
         this.eventStartDatetime = eventStartDatetime;
@@ -98,7 +97,7 @@ public class Event {
     }
 
     public static Event of(
-            Long placeId,
+            Place place,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -108,7 +107,7 @@ public class Event {
             String memo
     ) {
         return new Event(
-                placeId,
+                place,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
