@@ -49,15 +49,19 @@ public class Event {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime eventStartDatetime;
 
-    @Setter @Column(nullable = false, columnDefinition = "datetime")
+    @Setter
+    @Column(nullable = false, columnDefinition = "datetime")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime eventEndDatetime;
 
-    @Setter @Column(nullable = false, columnDefinition = "integer default 0")
+    @Setter
+    @Column(nullable = false, columnDefinition = "integer default 0")
     private Integer currentNumberOfPeople;
 
-    @Setter @Column(nullable = false)
+    @Setter
+    @Column(nullable = false)
     private Integer capacity;
+
 
     @Setter
     private String memo;
