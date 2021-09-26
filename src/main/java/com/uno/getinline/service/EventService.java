@@ -3,9 +3,11 @@ package com.uno.getinline.service;
 import com.querydsl.core.types.Predicate;
 import com.uno.getinline.constant.ErrorCode;
 import com.uno.getinline.constant.EventStatus;
+import com.uno.getinline.domain.Place;
 import com.uno.getinline.dto.EventDto;
 import com.uno.getinline.exception.GeneralException;
 import com.uno.getinline.repository.EventRepository;
+import com.uno.getinline.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.StreamSupport;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final PlaceRepository placeRepository;
 
     public List<EventDto> getEvents(Predicate predicate) {
         try {
@@ -58,7 +61,9 @@ public class EventService {
                 return false;
             }
 
-            eventRepository.save(eventDTO.toEntity());
+            Place place = placeRepository.findById(eventDTO.placeDto().id())
+                    .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND));
+            eventRepository.save(eventDTO.toEntity(place));
             return true;
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);

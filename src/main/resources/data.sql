@@ -1,6 +1,3 @@
--- noinspection SqlNoDataSourceInspectionForFile
--- noinspection SqlResolveForFile
-
 insert into `place` (`place_type`, `place_name`, `address`, `phone_number`, `capacity`, `memo`)
 values
 ('SPORTS', '서울 배드민턴장', '경기도 성남시 대왕판교로 999', '010-9999-0000', 20, '판교는 정말 체크남방셔츠 뿐인가'),

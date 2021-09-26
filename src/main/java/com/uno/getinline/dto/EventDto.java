@@ -2,12 +2,13 @@ package com.uno.getinline.dto;
 
 import com.uno.getinline.constant.EventStatus;
 import com.uno.getinline.domain.Event;
+import com.uno.getinline.domain.Place;
 
 import java.time.LocalDateTime;
 
 public record EventDto(
         Long id,
-        Long placeId,
+        PlaceDto placeDto,
         String eventName,
         EventStatus eventStatus,
         LocalDateTime eventStartDatetime,
@@ -21,7 +22,7 @@ public record EventDto(
 
     public static EventDto of(
             Long id,
-            Long placeId,
+            PlaceDto placeDto,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -34,7 +35,7 @@ public record EventDto(
     ) {
         return new EventDto(
                 id,
-                placeId,
+                placeDto,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -50,7 +51,7 @@ public record EventDto(
     public static EventDto of(Event event) {
         return new EventDto(
                 event.getId(),
-                event.getPlaceId(),
+                PlaceDto.of(event.getPlace()),
                 event.getEventName(),
                 event.getEventStatus(),
                 event.getEventStartDatetime(),
@@ -63,9 +64,9 @@ public record EventDto(
         );
     }
 
-    public Event toEntity() {
+    public Event toEntity(Place place) {
         return Event.of(
-                placeId,
+                place,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -77,7 +78,6 @@ public record EventDto(
     }
 
     public Event updateEntity(Event event) {
-        if (placeId != null) { event.setPlaceId(placeId); }
         if (eventName != null) { event.setEventName(eventName); }
         if (eventStatus != null) { event.setEventStatus(eventStatus); }
         if (eventStartDatetime != null) { event.setEventStartDatetime(eventStartDatetime); }
