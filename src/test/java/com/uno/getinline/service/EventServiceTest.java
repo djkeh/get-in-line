@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -118,15 +119,15 @@ class EventServiceTest {
     @Test
     void givenEvent_whenCreating_thenCreatesEventAndReturnsTrue() {
         // Given
-        Event event = createEvent(1L, "오후 운동", false);
-        given(eventRepository.save(event)).willReturn(event);
+        EventDto eventDto = EventDto.of(createEvent("오후 운동", false));
+        given(eventRepository.save(any(Event.class))).willReturn(any());
 
         // When
-        boolean result = sut.createEvent(EventDto.of(event));
+        boolean result = sut.createEvent(eventDto);
 
         // Then
         assertThat(result).isTrue();
-        then(eventRepository).should().save(event);
+        then(eventRepository).should().save(any(Event.class));
     }
 
     @DisplayName("이벤트 정보를 주지 않으면, 생성 중단하고 결과를 false 로 보여준다.")
@@ -175,6 +176,10 @@ class EventServiceTest {
 
         // Then
         assertThat(result).isTrue();
+        assertThat(originalEvent.getEventName()).isEqualTo(changedEvent.getEventName());
+        assertThat(originalEvent.getEventStartDatetime()).isEqualTo(changedEvent.getEventStartDatetime());
+        assertThat(originalEvent.getEventEndDatetime()).isEqualTo(changedEvent.getEventEndDatetime());
+        assertThat(originalEvent.getEventStatus()).isEqualTo(changedEvent.getEventStatus());
         then(eventRepository).should().findById(eventId);
         then(eventRepository).should().save(changedEvent);
     }
@@ -281,6 +286,7 @@ class EventServiceTest {
         String hourEnd = isMorning ? "12" : "16";
 
         return createEvent(
+                1L,
                 placeId,
                 eventName,
                 EventStatus.OPENED,
@@ -290,13 +296,14 @@ class EventServiceTest {
     }
 
     private Event createEvent(
+            long id,
             long placeId,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDateTime,
             LocalDateTime eventEndDateTime
     ) {
-        return Event.of(
+        Event event = Event.of(
                 placeId,
                 eventName,
                 eventStatus,
@@ -306,6 +313,9 @@ class EventServiceTest {
                 24,
                 "마스크 꼭 착용하세요"
         );
+        ReflectionTestUtils.setField(event, "id", id);
+
+        return event;
     }
 
 }
