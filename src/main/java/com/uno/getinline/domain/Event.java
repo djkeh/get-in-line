@@ -39,7 +39,7 @@ public class Event {
     private String eventName;
 
     @Setter
-    @Column(nullable = false, columnDefinition = "varchar default 'OPENED'")
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'OPENED'")
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
