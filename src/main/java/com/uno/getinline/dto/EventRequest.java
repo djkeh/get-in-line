@@ -44,7 +44,7 @@ public record EventRequest(
     public EventDto toDTO() {
         return EventDto.of(
                 null,
-                this.placeId(),
+                null, // TODO: 여기를 반드시 적절히 고쳐야 사용할 수 있음
                 this.eventName(),
                 this.eventStatus(),
                 this.eventStartDatetime(),
