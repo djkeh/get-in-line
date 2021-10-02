@@ -8,6 +8,7 @@ import com.uno.getinline.constant.PlaceType;
 import com.uno.getinline.domain.Event;
 import com.uno.getinline.domain.Place;
 import com.uno.getinline.dto.EventDto;
+import com.uno.getinline.dto.EventViewResponse;
 import com.uno.getinline.exception.GeneralException;
 import com.uno.getinline.repository.EventRepository;
 import com.uno.getinline.repository.PlaceRepository;
@@ -17,6 +18,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
@@ -69,6 +73,24 @@ class EventServiceTest {
                 .isInstanceOf(GeneralException.class)
                 .hasMessageContaining(ErrorCode.DATA_ACCESS_ERROR.getMessage());
         then(eventRepository).should().findAll(any(Predicate.class));
+    }
+
+    @DisplayName("이벤트 뷰 데이터를 검색하면, 페이징된 결과를 출력하여 보여준다.")
+    @Test
+    void givenNothing_whenSearchingEventViewResponse_thenReturnsEventViewResponsePage() {
+        // Given
+        given(eventRepository.findEventViewPageBySearchParams(null, null, null, null, null, PageRequest.ofSize(10)))
+                .willReturn(new PageImpl<>(List.of(
+                        EventViewResponse.from(EventDto.of(createEvent("오전 운동", true))),
+                        EventViewResponse.from(EventDto.of(createEvent("오후 운동", false)))
+                )));
+
+        // When
+        Page<EventViewResponse> list = sut.getEventViewResponse(null, null, null, null, null, PageRequest.ofSize(10));
+
+        // Then
+        assertThat(list).hasSize(2);
+        then(eventRepository).should().findEventViewPageBySearchParams(null, null, null, null, null, PageRequest.ofSize(10));
     }
 
     @DisplayName("이벤트 ID로 존재하는 이벤트를 조회하면, 해당 이벤트 정보를 출력하여 보여준다.")
