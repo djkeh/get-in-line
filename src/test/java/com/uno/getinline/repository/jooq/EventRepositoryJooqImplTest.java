@@ -1,32 +1,39 @@
-package com.uno.getinline.repository;
+package com.uno.getinline.repository.jooq;
 
+import com.uno.getinline.config.JooqConfig;
 import com.uno.getinline.constant.EventStatus;
 import com.uno.getinline.dto.EventViewResponse;
-import org.junit.jupiter.api.Disabled;
+import org.jooq.DSLContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
-@Disabled("Jooq 테스트 중엔 Hibernate ddl-auto 옵션을 끄기 때문에 인메모리 DB 테스트가 불가능하다. 임시 비활성화")
-@DisplayName("DB - 이벤트")
-@DataJpaTest
-class EventRepositoryTest {
+@DisplayName("DB - 이벤트 (Jooq)")
+@Import({EventRepositoryJooqImpl.class, JooqConfig.class})
+@EnableConfigurationProperties(JooqConfig.CustomJooqProperties.class)
+@JooqTest
+class EventRepositoryJooqImplTest {
 
-    private final EventRepository eventRepository;
+    private final DSLContext dslContext; // 원래 @JooqTest 의 관심사
+    private final EventRepositoryJooq sut;
 
-    public EventRepositoryTest(@Autowired EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
+    public EventRepositoryJooqImplTest(
+            @Autowired DSLContext dslContext,
+            @Autowired EventRepositoryJooqImpl eventRepositoryJooq
+    ) {
+        this.dslContext = dslContext;
+        this.sut = eventRepositoryJooq;
     }
-
 
     @DisplayName("이벤트 뷰 데이터를 검색 파라미터와 함께 조회하면, 조건에 맞는 데이터를 페이징 처리하여 리턴한다.")
     @Test
@@ -34,7 +41,7 @@ class EventRepositoryTest {
         // Given
 
         // When
-        Page<EventViewResponse> eventPage = eventRepository.findEventViewPageBySearchParams(
+        Page<EventViewResponse> eventPage = sut.findEventViewPageBySearchParams(
                 "배드민턴",
                 "운동1",
                 EventStatus.OPENED,
@@ -61,7 +68,7 @@ class EventRepositoryTest {
         // Given
 
         // When
-        Page<EventViewResponse> eventPage = eventRepository.findEventViewPageBySearchParams(
+        Page<EventViewResponse> eventPage = sut.findEventViewPageBySearchParams(
                 "없은 장소",
                 "없는 이벤트",
                 null,
@@ -71,7 +78,9 @@ class EventRepositoryTest {
         );
 
         // Then
-        assertThat(eventPage).hasSize(0);
+        assertThat(eventPage.getTotalPages()).isEqualTo(0);
+        assertThat(eventPage.getNumberOfElements()).isEqualTo(0);
+        assertThat(eventPage.getTotalElements()).isEqualTo(0);
     }
 
     @DisplayName("이벤트 뷰 데이터를 검색 파라미터 없이 페이징 값만 주고 조회하면, 전체 데이터를 페이징 처리하여 리턴한다.")
@@ -80,36 +89,19 @@ class EventRepositoryTest {
         // Given
 
         // When
-        Page<EventViewResponse> eventPage = eventRepository.findEventViewPageBySearchParams(
+        Page<EventViewResponse> eventPage = sut.findEventViewPageBySearchParams(
                 null,
                 null,
                 null,
                 null,
                 null,
-                PageRequest.of(0, 5)
+                PageRequest.of(0, 5, Sort.by(Sort.Order.asc("placeName"), Sort.Order.desc("eventName"), Sort.Order.desc("eventType")))
         );
 
         // Then
-        assertThat(eventPage).hasSize(5);
-    }
-
-    @DisplayName("이벤트 뷰 데이터를 페이징 정보 없이 조회하면, 에러를 리턴한다.")
-    @Test
-    void givenNothing_whenFindingEventViewPage_thenThrowsError() {
-        // Given
-
-        // When
-        Throwable t = catchThrowable(() -> eventRepository.findEventViewPageBySearchParams(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        ));
-
-        // Then
-        assertThat(t).isInstanceOf(InvalidDataAccessApiUsageException.class);
+        assertThat(eventPage.getTotalPages()).isEqualTo(6);
+        assertThat(eventPage.getNumberOfElements()).isEqualTo(5);
+        assertThat(eventPage.getTotalElements()).isEqualTo(26); // data.sql 테스트 데이터를 참고
     }
 
 }
