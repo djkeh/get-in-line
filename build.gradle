@@ -134,3 +134,13 @@ tasks.named('generateJooq').configure {
     allInputsDeclared = true
     outputs.cacheIf { true }
 }
+
+// java source set 에 Jooq 디렉토리 추가
+sourceSets {
+    main.java.srcDir generatedJooq
+}
+
+// gradle clean 시에 Jooq 디렉토리 삭제 (본래의 Jooq 의도에는 맞지 않는 사용법)
+tasks.named('clean') {
+    dependsOn 'cleanGenerateJooq'
+}
