@@ -37,7 +37,7 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // Querydsl 설정
+    // Querydsl
     implementation "com.querydsl:querydsl-jpa"
     implementation "com.querydsl:querydsl-collections"
     annotationProcessor "com.querydsl:querydsl-apt:${project.querydslVersion}:jpa" // querydsl JPAAnnotationProcessor 사용 지정
@@ -49,7 +49,7 @@ test {
 }
 
 //// Querydsl 설정부
-def generated='src/main/generated'
+def generated = 'src/main/generated'
 
 // querydsl QClass 파일 생성 위치를 지정
 tasks.withType(JavaCompile) {
