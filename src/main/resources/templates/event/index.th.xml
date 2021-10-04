@@ -4,11 +4,11 @@
   <attr sel="#eventsTable">
     <attr sel="tbody">
       <attr sel="tr[0]" th:each="event : ${events}">
-        <attr sel="td.placeName" th:text="${event.place.placeName}" />
+        <attr sel="td.placeName" th:text="${event.placeName}" />
         <attr sel="td.eventName" th:text="${event.eventName}" />
         <attr sel="td.eventStatus" th:text="${event.eventStatus}" />
-        <attr sel="td.eventStartDatetime" th:text="${event.eventStartDatetime}" />
-        <attr sel="td.eventEndDatetime" th:text="${event.eventEndDatetime}" />
+        <attr sel="td.eventStartDatetime" th:text="${#temporals.format(event.eventStartDatetime, 'M/d (ha)', 'US')}" />
+        <attr sel="td.eventEndDatetime" th:text="${#temporals.format(event.eventEndDatetime, 'M/d (ha)', 'US')}" />
         <attr sel="td.currentNumberOfPeople" th:text="${event.currentNumberOfPeople}" />
         <attr sel="td.capacity" th:text="${event.capacity}" />
         <attr sel="td/a" th:text="'상세'" th:href="@{'/events/' + ${event.id}}" />
