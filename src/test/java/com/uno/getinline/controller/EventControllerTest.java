@@ -121,14 +121,6 @@ class EventControllerTest {
         EventStatus eventStatus = EventStatus.OPENED;
         LocalDateTime eventStartDatetime = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
         LocalDateTime eventEndDatetime = LocalDateTime.of(2021, 1, 2, 0, 0, 0);
-        given(eventService.getEventViewResponse(
-                placeName,
-                eventName,
-                eventStatus,
-                eventStartDatetime,
-                eventEndDatetime,
-                PageRequest.of(1, 3)
-        )).willReturn(Page.empty());
 
         // When & Then
         mvc.perform(
@@ -141,7 +133,7 @@ class EventControllerTest {
                         .queryParam("page", "1")
                         .queryParam("size", "3")
         )
-                .andExpect(status().isInternalServerError())
+                .andExpect(status().isForbidden()) // validation error 는 403 으로 내려온다.
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("error"))
                 .andExpect(model().attributeDoesNotExist("events"));

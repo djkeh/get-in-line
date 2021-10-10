@@ -18,27 +18,37 @@ public class BaseErrorController implements ErrorController {
 
     @RequestMapping(path = "/error", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView errorHtml(HttpServletResponse response) {
-        HttpStatus status = HttpStatus.valueOf(response.getStatus());
-        ErrorCode errorCode = status.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
+        HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
+        ErrorCode errorCode = httpStatus.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
+
+        if (httpStatus == HttpStatus.OK) {
+            httpStatus = HttpStatus.FORBIDDEN;
+            errorCode = ErrorCode.BAD_REQUEST;
+        }
 
         return new ModelAndView(
                 "error",
                 Map.of(
-                        "statusCode", status.value(),
+                        "statusCode", httpStatus.value(),
                         "errorCode", errorCode,
-                        "message", errorCode.getMessage(status.getReasonPhrase())
+                        "message", errorCode.getMessage(httpStatus.getReasonPhrase())
                 ),
-                status
+                httpStatus
         );
     }
 
     @RequestMapping("/error")
     public ResponseEntity<ApiErrorResponse> error(HttpServletResponse response) {
-        HttpStatus status = HttpStatus.valueOf(response.getStatus());
-        ErrorCode errorCode = status.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
+        HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
+        ErrorCode errorCode = httpStatus.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
+
+        if (httpStatus == HttpStatus.OK) {
+            httpStatus = HttpStatus.FORBIDDEN;
+            errorCode = ErrorCode.BAD_REQUEST;
+        }
 
         return ResponseEntity
-                .status(status)
+                .status(httpStatus)
                 .body(ApiErrorResponse.of(false, errorCode));
     }
 
