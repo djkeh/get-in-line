@@ -66,15 +66,14 @@ public class EventService {
         }
     }
 
-    public boolean createEvent(EventDto eventDTO) {
+    public boolean createEvent(EventDto eventDto) {
         try {
-            if (eventDTO == null) {
+            if (eventDto == null) {
                 return false;
             }
 
-            Place place = placeRepository.findById(eventDTO.placeDto().id())
-                    .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND));
-            eventRepository.save(eventDTO.toEntity(place));
+            Place place = placeRepository.getById(eventDto.placeDto().id());
+            eventRepository.save(eventDto.toEntity(place));
             return true;
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);

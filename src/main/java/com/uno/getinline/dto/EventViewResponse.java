@@ -51,18 +51,18 @@ public record EventViewResponse(
         );
     }
 
-    public static EventViewResponse from(EventDto eventDTO) {
-        if (eventDTO == null) { return null; }
+    public static EventViewResponse from(EventDto eventDto) {
+        if (eventDto == null) { return null; }
         return EventViewResponse.of(
-                eventDTO.id(),
-                eventDTO.placeDto().placeName(),
-                eventDTO.eventName(),
-                eventDTO.eventStatus(),
-                eventDTO.eventStartDatetime(),
-                eventDTO.eventEndDatetime(),
-                eventDTO.currentNumberOfPeople(),
-                eventDTO.capacity(),
-                eventDTO.memo()
+                eventDto.id(),
+                eventDto.placeDto().placeName(),
+                eventDto.eventName(),
+                eventDto.eventStatus(),
+                eventDto.eventStartDatetime(),
+                eventDto.eventEndDatetime(),
+                eventDto.currentNumberOfPeople(),
+                eventDto.capacity(),
+                eventDto.memo()
         );
     }
 
