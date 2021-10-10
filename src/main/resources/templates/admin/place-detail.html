@@ -1,15 +1,50 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-<title>Title</title>
+  <title>관리자 장소</title>
 </head>
 <body>
 <p>
-  This is admin place detail page.
+  <span id="placeTitle">This is admin place detail page.</span>
 </p>
-<p>
-  <span th:text="${place} ?: _">?</span>
-</p>
+<form id="placeForm">
+  <table id="placeTable">
+    <tbody>
+    <tr>
+      <td><label for="placeType">장소 유형</label></td>
+      <td>
+        <select id="placeType" name="placeType">
+          <option>스포츠</option>
+          <option>레스토랑</option>
+          <option>일반</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="placeName">장소 이름</label></td>
+      <td><input type="text" id="placeName" name="placeName" required></td>
+    </tr>
+    <tr>
+      <td><label for="address">주소</label></td>
+      <td><input type="text" id="address" name="address" required></td>
+    </tr>
+    <tr>
+      <td><label for="phoneNumber">전화번호</label></td>
+      <td><input type="tel" id="phoneNumber" name="phoneNumber" required></td>
+    </tr>
+    <tr>
+      <td><label for="capacity">수용 인원</label></td>
+      <td><input type="number" id="capacity" name="capacity" required></td>
+    </tr>
+    <tr>
+      <td><label for="memo">메모</label></td>
+      <td><textarea id="memo" readonly></textarea></td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<button id="savePlace" type="submit">저장</button>
+<button id="backToPlaces" type="button">취소</button>
 </body>
 </html>
