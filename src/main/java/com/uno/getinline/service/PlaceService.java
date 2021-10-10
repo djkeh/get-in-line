@@ -7,17 +7,20 @@ import com.uno.getinline.exception.GeneralException;
 import com.uno.getinline.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class PlaceService {
 
     private final PlaceRepository placeRepository;
 
+    @Transactional(readOnly = true)
     public List<PlaceDto> getPlaces(Predicate predicate) {
         try {
             return StreamSupport.stream(placeRepository.findAll(predicate).spliterator(), false)
@@ -28,6 +31,7 @@ public class PlaceService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Optional<PlaceDto> getPlace(Long placeId) {
         try {
             return placeRepository.findById(placeId).map(PlaceDto::of);
