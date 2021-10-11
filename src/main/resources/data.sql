@@ -39,7 +39,7 @@ values
 
 insert into `admin` (`email`, `nickname`, `password`, `phone_number`, `memo`)
 values
-('test@test.com', '테스트', '1234', '010-0101-0101', '안녕하세요')
+('test@test.com', '테스트', '{noop}1234', '010-0101-0101', '안녕하세요')
 ;
 
 insert into `admin_place_map` (`admin_id`, `place_id`)
