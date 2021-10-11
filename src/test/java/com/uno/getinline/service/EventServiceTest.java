@@ -142,7 +142,7 @@ class EventServiceTest {
         then(eventRepository).should().findById(any());
     }
 
-    @DisplayName("이벤트 ID로 존재하는 이벤트를 조회하면, 해당 이벤트 정보를 출력하여 보여준다.")
+    @DisplayName("장소 ID로 존재하는 이벤트를 조회하면, 페이징된 해당 이벤트 정보를 출력하여 보여준다.")
     @Test
     void givenPlaceIdAndPageable_whenSearchingEventsWithPlace_thenReturnsEventsPage() {
         // Given
