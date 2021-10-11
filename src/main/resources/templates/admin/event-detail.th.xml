@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <thlogic>
-  <attr sel="#logout" th:text="'로그아웃'" th:href="@{/logout}" />
+  <attr sel="#logout" th:onclick="'location.href=\'' + @{/logout} + '\''" />
   <attr sel="#eventTitle" th:text="'이벤트 상세 - 관리자 (' + ${adminOperationStatus.message} + ')'" />
   <attr sel="#eventTable">
     <attr sel="#placeName" th:value="*{event?.placeName}" />

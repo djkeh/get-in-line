@@ -2,63 +2,99 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <title>관리자 이벤트</title>
 </head>
 <body>
-<p>
-  <a id="logout">로그아웃</a>
-</p>
-<p>
-  <span id="eventTitle">This is admin event page.</span>
-</p>
-<form id="eventForm">
-  <table id="eventTable">
-    <tbody>
-    <tr>
-      <td><label for="placeName">장소 이름</label></td>
-      <td><input type="text" id="placeName" name="placeName" readonly></td>
-    </tr>
-    <tr>
-      <td><label for="eventName">이벤트 이름</label></td>
-      <td><input type="text" id="eventName" name="eventName" required></td>
-    </tr>
-    <tr>
-      <td><label for="eventStatus">이벤트 상태</label></td>
-      <td>
-        <select id="eventStatus" name="eventStatus" required>
-          <option>열림</option>
-          <option>종료</option>
-          <option>취소</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td><label for="eventStartDatetime">시작 일시</label></td>
-      <td><input type="datetime-local" id="eventStartDatetime" name="eventStartDatetime" required></td>
-    </tr>
-    <tr>
-      <td><label for="eventEndDatetime">종료 일시</label></td>
-      <td><input type="datetime-local" id="eventEndDatetime" name="eventEndDatetime" required></td>
-    </tr>
-    <tr>
-      <td><label for="currentNumberOfPeople">현재 인원</label></td>
-      <td><input type="number" id="currentNumberOfPeople" name="currentNumberOfPeople" min="0" required></td>
-    </tr>
-    <tr>
-      <td><label for="capacity">최대 수용 인원</label></td>
-      <td><input type="number" id="capacity" name="capacity" min="0" required></td>
-    </tr>
-    <tr>
-      <td><label for="memo">메모</label></td>
-      <td><textarea id="memo" name="memo"></textarea></td>
-    </tr>
-    </tbody>
-  </table>
-  <input type="hidden" id="eventId" name="id">
-  <input type="hidden" id="csrf">
-</form>
-<button id="saveEvent" type="submit">저장</button>
-<button id="removeEvent" type="button">삭제</button>
-<button id="backToEvents" type="button">취소</button>
+<div class="space-y-4">
+  <button id="logout" type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">로그아웃</button>
+  <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+    <span id="eventTitle">This is admin event page.</span>
+  </h2>
+  <div class="mt-5 md:mt-0">
+    <form id="eventForm">
+      <table id="eventTable" class="w-full max-w-md">
+        <tbody>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="placeName" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">장소 이름</label>
+          </td>
+          <td class="md:w-2/3">
+            <input type="text" id="placeName" name="placeName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="eventName" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">이벤트 이름</label>
+          </td>
+          <td class="md:w-2/3">
+            <input type="text" id="eventName" name="eventName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="eventStatus" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">이벤트 상태</label>
+          </td>
+          <td class="md:w-2/3">
+            <select id="eventStatus" name="eventStatus" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+              <option>열림</option>
+              <option>종료</option>
+              <option>취소</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="eventStartDatetime" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">시작 일시</label>
+          </td>
+          <td class="md:w-2/3">
+            <input type="datetime-local" id="eventStartDatetime" name="eventStartDatetime" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="eventEndDatetime" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">종료 일시</label>
+          </td>
+          <td class="md:w-2/3">
+            <input type="datetime-local" id="eventEndDatetime" name="eventEndDatetime" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="currentNumberOfPeople" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">현재 인원</label>
+          </td>
+          <td class="md:w-2/3">
+            <input type="number" id="currentNumberOfPeople" name="currentNumberOfPeople" min="0" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="capacity" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">최대 수용 인원</label>
+          </td>
+          <td class="md:w-2/3">
+            <input type="number" id="capacity" name="capacity" min="0" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          </td>
+        </tr>
+        <tr>
+          <td class="md:w-1/3">
+            <label for="memo" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">메모</label>
+          </td>
+          <td class="md:w-2/3">
+            <textarea id="memo" name="memo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <input type="hidden" id="eventId" name="id">
+      <input type="hidden" id="csrf">
+    </form>
+    <div class="text-right w-full max-w-md">
+      <button id="saveEvent" type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">저장</button>
+      <button id="removeEvent" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">삭제</button>
+      <button id="backToEvents" type="button" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">취소</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

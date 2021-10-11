@@ -2,37 +2,47 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <title>이벤트 리스트</title>
 </head>
 <body>
-<p>
-  <span id="eventsTitle">This is events page.</span>
-</p>
-<table id="eventsTable">
-  <thead>
-    <tr>
-      <th>장소명</th>
-      <th>이벤트명</th>
-      <th>이벤트 상태</th>
-      <th>시작 일시</th>
-      <th>종료 일시</th>
-      <th>현재 인원</th>
-      <th>최대 수용 인원</th>
-      <th>상세</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="placeName">1</td>
-      <td class="eventName">테스트 이벤트</td>
-      <td class="eventStatus">OPENED</td>
-      <td class="eventStartDatetime">2021-01-01 09:00:00</td>
-      <td class="eventEndDatetime">2021-01-01 10:00:00</td>
-      <td class="currentNumberOfPeople">0</td>
-      <td class="capacity">10</td>
-      <td><a>상세</a></td>
-    </tr>
-  </tbody>
-</table>
+<div class="space-y-4 py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+  <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+    <span id="eventsTitle">This is events page.</span>
+  </h2>
+  <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+    <table id="eventsTable" class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">장소명</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이벤트명</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이벤트 상태</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">시작 일시</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">종료 일시</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">현재 인원</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">최대 수용 인원</th>
+          <th scope="col" class="relative px-6 py-3"><span class="sr-only">상세</span></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr>
+          <td class="placeName px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+          <td class="eventName px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">테스트 이벤트</td>
+          <td class="eventStatus px-6 py-4 whitespace-nowrap">
+            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">OPENED</span>
+          </td>
+          <td class="eventStartDatetime px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2021-01-01 09:00:00</td>
+          <td class="eventEndDatetime px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2021-01-01 10:00:00</td>
+          <td class="currentNumberOfPeople px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">0</td>
+          <td class="capacity px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">10</td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <a class="text-indigo-600 hover:text-indigo-900">상세</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>
