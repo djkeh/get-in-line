@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <thlogic>
+  <attr sel="#logout" th:text="'로그아웃'" th:href="@{/logout}" />
   <attr sel="#placesTitle" th:text="'장소 목록 - 관리자'" />
   <attr sel="#placesTable">
     <attr sel="tbody">
