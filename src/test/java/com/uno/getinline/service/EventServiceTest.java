@@ -142,6 +142,24 @@ class EventServiceTest {
         then(eventRepository).should().findById(any());
     }
 
+    @DisplayName("이벤트 ID로 존재하는 이벤트를 조회하면, 해당 이벤트 정보를 출력하여 보여준다.")
+    @Test
+    void givenPlaceIdAndPageable_whenSearchingEventsWithPlace_thenReturnsEventsPage() {
+        // Given
+        long placeId = 1L;
+        Place place = createPlace();
+        given(placeRepository.getById(placeId)).willReturn(place);
+        given(eventRepository.findByPlace(place, PageRequest.ofSize(5))).willReturn(Page.empty());
+
+        // When
+        Page<EventViewResponse> result = sut.getEvent(placeId, PageRequest.ofSize(5));
+
+        // Then
+        assertThat(result).hasSize(0);
+        then(placeRepository).should().getById(placeId);
+        then(eventRepository).should().findByPlace(place, PageRequest.ofSize(5));
+    }
+
     @DisplayName("이벤트 정보를 주면, 이벤트를 생성하고 결과를 true 로 보여준다.")
     @Test
     void givenEvent_whenCreating_thenCreatesEventAndReturnsTrue() {

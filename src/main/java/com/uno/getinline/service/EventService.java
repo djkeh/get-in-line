@@ -3,6 +3,7 @@ package com.uno.getinline.service;
 import com.querydsl.core.types.Predicate;
 import com.uno.getinline.constant.ErrorCode;
 import com.uno.getinline.constant.EventStatus;
+import com.uno.getinline.domain.Event;
 import com.uno.getinline.domain.Place;
 import com.uno.getinline.dto.EventDto;
 import com.uno.getinline.dto.EventViewResponse;
@@ -11,6 +12,7 @@ import com.uno.getinline.repository.EventRepository;
 import com.uno.getinline.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +68,25 @@ public class EventService {
     public Optional<EventDto> getEvent(Long eventId) {
         try {
             return eventRepository.findById(eventId).map(EventDto::of);
+        } catch (Exception e) {
+            throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Page<EventViewResponse> getEvent(Long placeId, Pageable pageable) {
+        try {
+            Place place = placeRepository.getById(placeId);
+            Page<Event> eventPage = eventRepository.findByPlace(place, pageable);
+
+            return new PageImpl<>(
+                    eventPage.getContent()
+                            .stream()
+                            .map(event -> EventViewResponse.from(EventDto.of(event)))
+                            .toList(),
+                    eventPage.getPageable(),
+                    eventPage.getTotalElements()
+            );
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }

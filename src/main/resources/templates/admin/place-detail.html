@@ -49,7 +49,26 @@
 <button id="removePlace" type="button">삭제</button>
 <button id="backToPlaces" type="button">취소</button>
 <hr>
-<!-- TODO: 여기에 장소와 연관된 이벤트들이 리스트로 보이면 좋을 듯 -->
+<table id="eventTable">
+  <thead>
+    <tr>
+      <th>이벤트명</th>
+      <th>이벤트 상태</th>
+      <th>시작 ~ 종료</th>
+      <th>현재 인원 / 최대 인원</th>
+      <th>상세</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="eventName">테스트 이벤트</td>
+      <td class="eventStatus">OPENED</td>
+      <td class="eventDatetime">1/1 9AM	~ 1/1 12PM</td>
+      <td class="people">0 / 10</td>
+      <td><a>상세</a></td>
+    </tr>
+  </tbody>
+</table>
 <button id="newEvent" type="button">새 이벤트</button>
 </body>
 </html>
