@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<thlogic>
+  <attr sel="#logoutTitle" th:text="'로그아웃 페이지'" />
+  <attr sel="#csrf" th:value="${_csrf.token}" th:name="${_csrf.parameterName}" />
+  <attr sel="#logout" th:form="logoutForm" th:formaction="@{/logout}" th:formmethod="post" />
+  <attr sel="#cancel" th:onclick="'location.href=\'' + @{${backUrl}} + '\''" />
+</thlogic>

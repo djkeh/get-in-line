@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
-This is login page.
+<p>
+  <span id="loginTitle">This is login page.</span>
+</p>
+<form id="loginForm">
+  <table>
+    <tbody>
+    <tr>
+      <td><label for="username">EMAIL</label></td>
+      <td><input type="text" id="username" name="username" required></td>
+    </tr>
+    <tr>
+      <td><label for="password">패스워드</label></td>
+      <td><input type="password" id="password" name="password" required></td>
+    </tr>
+    </tbody>
+  </table>
+  <input type="hidden" id="csrf">
+</form>
+<button id="login" type="submit">로그인</button>
 </body>
 </html>
