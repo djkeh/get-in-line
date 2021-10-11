@@ -19,7 +19,7 @@
   <attr sel="#removePlace" th:if="${place?.id} != null" th:onclick="'location.href=\'' + @{/admin/places/{placeId}/delete(placeId=${place?.id})} + '\''" />
   <attr sel="#backToPlaces" th:onclick="'location.href=\'' + @{/admin/places} + '\''" />
 
-  <attr sel="#eventTable">
+  <attr sel="#eventTable" th:if="${place?.id} != null">
     <attr sel="tbody" th:remove="all-but-first">
       <attr sel="tr[0]" th:each="event : ${events}">
         <attr sel="td.eventName" th:text="${event.eventName}" />

@@ -2,5 +2,5 @@
 <thlogic>
   <attr sel="#status" th:text="${adminOperationStatus?.message} ?: _" />
   <attr sel="#backToPage" th:onclick="'location.replace(\'' + @{${redirectUrl}} + '\');'" />
-  <attr sel="script" th:inline="javascript" th:utext="'window.onload = (event) => { setTimeout(() => window.location.replace(\'' + ${redirectUrl ?: ''} + '\'), 5000); };'" />
+  <attr sel="script" th:inline="javascript" th:utext="'window.onload = (event) => { setTimeout(() => window.location.replace(\'' + ${redirectUrl ?: ''} + '\'), 1500); };'" />
 </thlogic>
