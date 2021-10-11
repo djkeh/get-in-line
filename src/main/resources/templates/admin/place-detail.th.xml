@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <thlogic>
-  <attr sel="#placeTitle" th:text="'장소 상세 - 관리자'" />
-  <attr sel="#placeTable" th:object="${place}">
-    <attr sel="#placeType" th:remove="all-but-first" th:required="true">
-      <attr sel="option" th:each="type : ${placeType}" th:value="${type}" th:text="${type}" />
+  <attr sel="#placeTitle" th:text="'장소 상세 - 관리자 (' + ${adminOperationStatus.message} + ')'" />
+  <attr sel="#placeTable">
+    <attr sel="#placeType" th:remove="all-but-first">
+      <attr sel="option" th:each="type : ${placeTypeOption}" th:value="${type}" th:text="${type}" th:selected="${place?.placeType == type}" />
     </attr>
-    <attr sel="#placeName" th:value="*{placeName}" />
-    <attr sel="#address" th:value="*{address}" />
-    <attr sel="#phoneNumber" th:value="*{phoneNumber}" th:pattern="'[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}'"
-          th:oninvalid="'this.setCustomValidity(\'전화번호 형식을 맞춰주세요 (ex: 000-0000-0000)\')'" />
-    <attr sel="#capacity" th:value="*{capacity}" th:min="0" />
-    <attr sel="#memo" th:value="*{memo}" />
+    <attr sel="#placeName" th:value="${place?.placeName}" />
+    <attr sel="#address" th:value="${place?.address}" />
+    <attr sel="#phoneNumber" th:value="${place?.phoneNumber}" th:pattern="'[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}'"
+          th:title="'전화번호 형식을 맞춰주세요 (ex: 000-0000-0000)'" />
+    <attr sel="#capacity" th:value="${place?.capacity}" th:min="0" />
+    <attr sel="#memo" th:text="${place?.memo}" />
   </attr>
   <attr sel="#savePlace" th:form="placeForm" th:formaction="@{/admin/places}" th:formmethod="post" />
   <attr sel="#backToPlaces" th:onclick="'location.href=\'' + @{/admin/places} + '\''" />
+  <attr sel="#newEvent" th:if="${place} != null" th:onclick="'location.href=\'' + @{/admin/places/{placeId}/newEvent(placeId=${place.id})} + '\''" />
 </thlogic>

@@ -1,34 +1,32 @@
 package com.uno.getinline.controller;
 
 import com.querydsl.core.types.Predicate;
+import com.uno.getinline.constant.AdminOperationStatus;
 import com.uno.getinline.constant.ErrorCode;
 import com.uno.getinline.constant.EventStatus;
 import com.uno.getinline.constant.PlaceType;
 import com.uno.getinline.domain.Event;
 import com.uno.getinline.domain.Place;
-import com.uno.getinline.dto.EventDto;
-import com.uno.getinline.dto.EventResponse;
-import com.uno.getinline.dto.PlaceDto;
-import com.uno.getinline.dto.PlaceResponse;
+import com.uno.getinline.dto.*;
 import com.uno.getinline.exception.GeneralException;
 import com.uno.getinline.service.EventService;
 import com.uno.getinline.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
@@ -47,7 +45,7 @@ public class AdminController {
                 "admin/places",
                 Map.of(
                         "places", places,
-                        "placeType", PlaceType.values()
+                        "placeTypeOption", PlaceType.values()
                 )
         );
     }
@@ -61,10 +59,61 @@ public class AdminController {
         return new ModelAndView(
                 "admin/place-detail",
                 Map.of(
+                        "adminOperationStatus", AdminOperationStatus.MODIFY,
                         "place", place,
-                        "placeType", PlaceType.values()
+                        "placeTypeOption", PlaceType.values()
                 )
         );
+    }
+
+    @GetMapping("/places/new")
+    public String newPlace(Model model) {
+        model.addAttribute("adminOperationStatus", AdminOperationStatus.CREATE);
+        model.addAttribute("placeTypeOption", PlaceType.values());
+
+        return "admin/place-detail";
+    }
+
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @PostMapping("/places")
+    public String createPlace(
+            @Valid PlaceRequest placeRequest,
+            RedirectAttributes redirectAttributes
+    ) {
+        placeService.createPlace(placeRequest.toDto());
+
+        redirectAttributes.addFlashAttribute("adminOperationStatus", AdminOperationStatus.CREATE);
+        redirectAttributes.addFlashAttribute("redirectUrl", "/admin/places");
+
+        return "redirect:/admin/confirm";
+    }
+
+    @GetMapping("/places/{placeId}/newEvent")
+    public String newEvent(@PathVariable Long placeId, Model model) {
+        EventResponse event = placeService.getPlace(placeId)
+                .map(EventResponse::empty)
+                .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND));
+
+        model.addAttribute("adminOperationStatus", AdminOperationStatus.CREATE);
+        model.addAttribute("eventStatusOption", EventStatus.values());
+        model.addAttribute("event", event);
+
+        return "admin/event-detail";
+    }
+
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    @PostMapping("/places/{placeId}/events")
+    public String createEvent(
+            @Valid EventRequest eventRequest,
+            @PathVariable Long placeId,
+            RedirectAttributes redirectAttributes
+    ) {
+        eventService.createEvent(eventRequest.toDto(PlaceDto.idOnly(placeId)));
+
+        redirectAttributes.addFlashAttribute("adminOperationStatus", AdminOperationStatus.CREATE);
+        redirectAttributes.addFlashAttribute("redirectUrl", "/admin/places/" + placeId);
+
+        return "redirect:/admin/confirm";
     }
 
     @GetMapping("/events")
@@ -78,7 +127,7 @@ public class AdminController {
                 "admin/events",
                 Map.of(
                         "events", events,
-                        "eventStatus", EventStatus.values()
+                        "eventStatusOption", EventStatus.values()
                 )
         );
     }
@@ -92,10 +141,19 @@ public class AdminController {
         return new ModelAndView(
                 "admin/event-detail",
                 Map.of(
+                        "adminOperationStatus", AdminOperationStatus.MODIFY,
                         "event", event,
-                        "eventStatus", EventStatus.values()
+                        "eventStatusOption", EventStatus.values()
                 )
         );
     }
 
+    @GetMapping("/confirm")
+    public String confirm(Model model) {
+        if (!model.containsAttribute("redirectUrl")) {
+            throw new GeneralException(ErrorCode.BAD_REQUEST);
+        }
+
+        return "admin/confirm";
+    }
 }

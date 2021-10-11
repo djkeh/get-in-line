@@ -14,7 +14,7 @@
     <tr>
       <td><label for="placeType">장소 유형</label></td>
       <td>
-        <select id="placeType" name="placeType">
+        <select id="placeType" name="placeType" required>
           <option>스포츠</option>
           <option>레스토랑</option>
           <option>일반</option>
@@ -39,12 +39,15 @@
     </tr>
     <tr>
       <td><label for="memo">메모</label></td>
-      <td><textarea id="memo" readonly></textarea></td>
+      <td><textarea id="memo"></textarea></td>
     </tr>
     </tbody>
   </table>
 </form>
 <button id="savePlace" type="submit">저장</button>
 <button id="backToPlaces" type="button">취소</button>
+<hr>
+<!-- TODO: 여기에 장소와 연관된 이벤트들이 리스트로 보이면 좋을 듯 -->
+<button id="newEvent" type="button">새 이벤트</button>
 </body>
 </html>
