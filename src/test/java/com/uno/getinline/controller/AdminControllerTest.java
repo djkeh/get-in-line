@@ -147,6 +147,26 @@ class AdminControllerTest {
         then(placeService).should().upsertPlace(placeRequest.toDto());
     }
 
+    @DisplayName("[view][GET] 어드민 페이지 - 장소 세부 정보 뷰, 장소 삭제")
+    @Test
+    void givenPlaceId_whenDeletingPlace_thenDeletesPlaceAndReturnsToListPage() throws Exception {
+        // Given
+        long placeId = 1L;
+        given(placeService.removePlace(placeId)).willReturn(true);
+
+        // When & Then
+        mvc.perform(
+                get("/admin/places/" + placeId + "/delete")
+                        .contentType(MediaType.TEXT_HTML)
+        )
+                .andExpect(status().isSeeOther())
+                .andExpect(view().name("redirect:/admin/confirm"))
+                .andExpect(redirectedUrl("/admin/confirm"))
+                .andExpect(flash().attribute("adminOperationStatus", AdminOperationStatus.DELETE))
+                .andExpect(flash().attribute("redirectUrl", "/admin/places"));
+        then(placeService).should().removePlace(placeId);
+    }
+
     @DisplayName("[view][GET] 어드민 페이지 - 이벤트 리스트 뷰")
     @Test
     void givenQueryParams_whenRequestingAdminEventsPage_thenReturnsAdminEventsPage() throws Exception {
@@ -250,6 +270,26 @@ class AdminControllerTest {
                 .andExpect(flash().attribute("redirectUrl", "/admin/places/" + placeId))
                 .andDo(MockMvcResultHandlers.print());
         then(eventService).should().upsertEvent(eventRequest.toDto(PlaceDto.idOnly(placeId)));
+    }
+
+    @DisplayName("[view][GET] 어드민 페이지 - 이벤트 세부 정보 뷰, 이벤트 삭제")
+    @Test
+    void givenEventId_whenDeletingEvent_thenDeletesEventAndReturnsToListPage() throws Exception {
+        // Given
+        long eventId = 1L;
+        given(eventService.removeEvent(eventId)).willReturn(true);
+
+        // When & Then
+        mvc.perform(
+                get("/admin/events/" + eventId + "/delete")
+                        .contentType(MediaType.TEXT_HTML)
+        )
+                .andExpect(status().isSeeOther())
+                .andExpect(view().name("redirect:/admin/confirm"))
+                .andExpect(redirectedUrl("/admin/confirm"))
+                .andExpect(flash().attribute("adminOperationStatus", AdminOperationStatus.DELETE))
+                .andExpect(flash().attribute("redirectUrl", "/admin/events"));
+        then(eventService).should().removeEvent(eventId);
     }
 
     @DisplayName("[view][GET] 어드민 페이지 - 기능 확인 페이지")
