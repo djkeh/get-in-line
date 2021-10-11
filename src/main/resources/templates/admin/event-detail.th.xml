@@ -15,6 +15,7 @@
     <attr sel="#memo" th:text="*{event?.memo}" />
   </attr>
   <attr sel="#eventId" th:value="${event?.id}" />
+  <attr sel="#csrf" th:value="${_csrf.token}" th:name="${_csrf.parameterName}" />
   <attr sel="#saveEvent" th:form="eventForm" th:formaction="@{/admin/places/{placeId}/events(placeId=${event?.place.id})}" th:formmethod="post" />
   <attr sel="#removeEvent" th:if="${event?.id} != null" th:onclick="'location.href=\'' + @{/admin/events/{eventId}/delete(eventId=${event?.id})} + '\''" />
   <attr sel="#backToEvents" th:onclick="'location.href=\'' + @{/admin/events} + '\''" />

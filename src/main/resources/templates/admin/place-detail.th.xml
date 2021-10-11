@@ -14,6 +14,7 @@
     <attr sel="#memo" th:text="${place?.memo}" />
   </attr>
   <attr sel="#placeId" th:value="${place?.id}" />
+  <attr sel="#csrf" th:value="${_csrf.token}" th:name="${_csrf.parameterName}" />
   <attr sel="#savePlace" th:form="placeForm" th:formaction="@{/admin/places}" th:formmethod="post" />
   <attr sel="#removePlace" th:if="${place?.id} != null" th:onclick="'location.href=\'' + @{/admin/places/{placeId}/delete(placeId=${place?.id})} + '\''" />
   <attr sel="#backToPlaces" th:onclick="'location.href=\'' + @{/admin/places} + '\''" />
