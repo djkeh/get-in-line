@@ -8,7 +8,7 @@ public class BaseController {
 
     @GetMapping("/")
     public String root() {
-        return "index";
+        return "redirect:/events";
     }
 
 }
