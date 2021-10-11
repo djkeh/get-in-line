@@ -71,6 +71,18 @@ public class EventService {
         }
     }
 
+    public boolean upsertEvent(EventDto eventDto) {
+        try {
+            if (eventDto.id() != null) {
+                return modifyEvent(eventDto.id(), eventDto);
+            } else {
+                return createEvent(eventDto);
+            }
+        } catch (Exception e) {
+            throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
+        }
+    }
+
     public boolean createEvent(EventDto eventDto) {
         try {
             if (eventDto == null) {

@@ -76,13 +76,14 @@ public class AdminController {
 
     @ResponseStatus(HttpStatus.SEE_OTHER)
     @PostMapping("/places")
-    public String createPlace(
+    public String upsertPlace(
             @Valid PlaceRequest placeRequest,
             RedirectAttributes redirectAttributes
     ) {
-        placeService.createPlace(placeRequest.toDto());
+        AdminOperationStatus status = placeRequest.id() != null ? AdminOperationStatus.MODIFY : AdminOperationStatus.CREATE;
+        placeService.upsertPlace(placeRequest.toDto());
 
-        redirectAttributes.addFlashAttribute("adminOperationStatus", AdminOperationStatus.CREATE);
+        redirectAttributes.addFlashAttribute("adminOperationStatus", status);
         redirectAttributes.addFlashAttribute("redirectUrl", "/admin/places");
 
         return "redirect:/admin/confirm";
@@ -103,14 +104,15 @@ public class AdminController {
 
     @ResponseStatus(HttpStatus.SEE_OTHER)
     @PostMapping("/places/{placeId}/events")
-    public String createEvent(
+    public String upsertEvent(
             @Valid EventRequest eventRequest,
             @PathVariable Long placeId,
             RedirectAttributes redirectAttributes
     ) {
-        eventService.createEvent(eventRequest.toDto(PlaceDto.idOnly(placeId)));
+        AdminOperationStatus status = eventRequest.id() != null ? AdminOperationStatus.MODIFY : AdminOperationStatus.CREATE;
+        eventService.upsertEvent(eventRequest.toDto(PlaceDto.idOnly(placeId)));
 
-        redirectAttributes.addFlashAttribute("adminOperationStatus", AdminOperationStatus.CREATE);
+        redirectAttributes.addFlashAttribute("adminOperationStatus", status);
         redirectAttributes.addFlashAttribute("redirectUrl", "/admin/places/" + placeId);
 
         return "redirect:/admin/confirm";

@@ -12,6 +12,7 @@
     <attr sel="#capacity" th:value="${place?.capacity}" th:min="0" />
     <attr sel="#memo" th:text="${place?.memo}" />
   </attr>
+  <attr sel="#placeId" th:value="${place?.id}" />
   <attr sel="#savePlace" th:form="placeForm" th:formaction="@{/admin/places}" th:formmethod="post" />
   <attr sel="#backToPlaces" th:onclick="'location.href=\'' + @{/admin/places} + '\''" />
   <attr sel="#newEvent" th:if="${place} != null" th:onclick="'location.href=\'' + @{/admin/places/{placeId}/newEvent(placeId=${place.id})} + '\''" />

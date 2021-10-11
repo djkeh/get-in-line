@@ -58,6 +58,7 @@ class ApiPlaceControllerTest {
     void givenPlace_whenCreatingAPlace_thenReturnsSuccessfulStandardResponse() throws Exception {
         // Given
         PlaceRequest placeRequest = PlaceRequest.of(
+                null,
                 PlaceType.COMMON,
                 "랄라배드민턴장",
                 "서울시 강남구 강남대로 1234",
@@ -123,6 +124,7 @@ class ApiPlaceControllerTest {
         // Given
         long placeId = 1L;
         PlaceRequest placeRequest = PlaceRequest.of(
+                null,
                 PlaceType.COMMON,
                 "랄라배드민턴장",
                 "서울시 강남구 강남대로 1234",

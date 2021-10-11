@@ -40,6 +40,18 @@ public class PlaceService {
         }
     }
 
+    public boolean upsertPlace(PlaceDto placeDto) {
+        try {
+            if (placeDto.id() != null) {
+                return modifyPlace(placeDto.id(), placeDto);
+            } else {
+                return createPlace(placeDto);
+            }
+        } catch (Exception e) {
+            throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
+        }
+    }
+
     public boolean createPlace(PlaceDto placeDto) {
         try {
             if (placeDto == null) {

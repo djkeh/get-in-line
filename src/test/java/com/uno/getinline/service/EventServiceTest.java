@@ -331,13 +331,57 @@ class EventServiceTest {
         then(eventRepository).should().deleteById(eventId);
     }
 
+    @DisplayName("ID가 포함된 이벤트 정보를 주면, 이벤트 정보를 변경하고 결과를 true 로 보여준다.")
+    @Test
+    void givenEventContainingId_whenUpserting_thenModifiesEventAndReturnsTrue() {
+        // Given
+        Event originalEvent = createEvent("오후 운동", false);
+        Event changedEvent = createEvent("오전 운동", true);
+        given(eventRepository.findById(changedEvent.getId())).willReturn(Optional.of(originalEvent));
+        given(eventRepository.save(changedEvent)).willReturn(changedEvent);
+
+        // When
+        boolean result = sut.upsertEvent(EventDto.of(changedEvent));
+
+        // Then
+        assertThat(result).isTrue();
+        assertThat(originalEvent.getEventName()).isEqualTo(changedEvent.getEventName());
+        assertThat(originalEvent.getEventStartDatetime()).isEqualTo(changedEvent.getEventStartDatetime());
+        assertThat(originalEvent.getEventEndDatetime()).isEqualTo(changedEvent.getEventEndDatetime());
+        assertThat(originalEvent.getEventStatus()).isEqualTo(changedEvent.getEventStatus());
+        then(eventRepository).should().findById(changedEvent.getId());
+        then(eventRepository).should().save(changedEvent);
+    }
+
+    @DisplayName("ID가 빠진 이벤트 정보를 주면, 이벤트 정보를 저장하고 결과를 true 로 보여준다.")
+    @Test
+    void givenEventWithoutId_whenUpserting_thenCreatesEventAndReturnsTrue() {
+        // Given
+        EventDto eventDto = EventDto.of(createEvent(null, "오후 운동", false));
+        given(placeRepository.getById(eventDto.placeDto().id())).willReturn(createPlace());
+        given(eventRepository.save(any(Event.class))).willReturn(any());
+
+        // When
+        boolean result = sut.upsertEvent(eventDto);
+
+        // Then
+        assertThat(result).isTrue();
+        then(placeRepository).should().getById(eventDto.placeDto().id());
+        then(eventRepository).should(never()).findById(any());
+        then(eventRepository).should().save(any(Event.class));
+    }
+
 
     private Event createEvent(String eventName, boolean isMorning) {
+        return createEvent(1L, eventName, isMorning);
+    }
+
+    private Event createEvent(Long eventId, String eventName, boolean isMorning) {
         String hourStart = isMorning ? "09" : "13";
         String hourEnd = isMorning ? "12" : "16";
 
         return createEvent(
-                1L,
+                eventId,
                 1L,
                 eventName,
                 EventStatus.OPENED,
@@ -347,8 +391,8 @@ class EventServiceTest {
     }
 
     private Event createEvent(
-            long id,
-            long placeId,
+            Long id,
+            Long placeId,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDateTime,
@@ -373,7 +417,7 @@ class EventServiceTest {
         return createPlace(1L);
     }
 
-    private Place createPlace(long id) {
+    private Place createPlace(Long id) {
         Place place = Place.of(PlaceType.COMMON, "test place", "test address", "010-1234-1234", 10, null);
         ReflectionTestUtils.setField(place, "id", id);
 

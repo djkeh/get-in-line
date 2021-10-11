@@ -3,6 +3,7 @@ package com.uno.getinline.dto;
 import com.uno.getinline.constant.PlaceType;
 
 public record PlaceRequest(
+        Long id,
         PlaceType placeType,
         String placeName,
         String address,
@@ -12,6 +13,7 @@ public record PlaceRequest(
 ) {
 
     public static PlaceRequest of(
+            Long id,
             PlaceType placeType,
             String placeName,
             String address,
@@ -19,12 +21,12 @@ public record PlaceRequest(
             Integer capacity,
             String memo
     ) {
-        return new PlaceRequest(placeType, placeName, address, phoneNumber, capacity, memo);
+        return new PlaceRequest(id, placeType, placeName, address, phoneNumber, capacity, memo);
     }
 
     public PlaceDto toDto() {
         return PlaceDto.of(
-                null,
+                this.id(),
                 this.placeType(),
                 this.placeName(),
                 this.address(),

@@ -10,6 +10,7 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 public record EventRequest(
+        Long id,
         @NotBlank String eventName,
         @NotNull EventStatus eventStatus,
         @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventStartDatetime,
@@ -20,6 +21,7 @@ public record EventRequest(
 ) {
 
     public static EventRequest of(
+            Long id,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -29,6 +31,7 @@ public record EventRequest(
             String memo
     ) {
         return new EventRequest(
+                id,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -41,7 +44,7 @@ public record EventRequest(
 
     public EventDto toDto(PlaceDto placeDto) {
         return EventDto.of(
-                null,
+                this.id(),
                 placeDto,
                 this.eventName(),
                 this.eventStatus(),

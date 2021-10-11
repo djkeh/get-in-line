@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.verification.VerificationMode;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -275,13 +276,47 @@ class PlaceServiceTest {
         then(placeRepository).should().deleteById(placeId);
     }
 
+    @DisplayName("ID가 포함된 장소 정보를 주면, 장소 정보를 변경하고 결과를 true 로 보여준다.")
+    @Test
+    void givenPlaceContainingId_whenUpserting_thenModifiesPlaceAndReturnsTrue() {
+        // Given
+        Place originalPlace = createPlace(PlaceType.SPORTS, "체육관");
+        Place changedPlace = createPlace(PlaceType.PARTY, "무도회장");
+        given(placeRepository.findById(changedPlace.getId())).willReturn(Optional.of(originalPlace));
+        given(placeRepository.save(changedPlace)).willReturn(changedPlace);
+
+        // When
+        boolean result = sut.upsertPlace(PlaceDto.of(changedPlace));
+
+        // Then
+        assertThat(result).isTrue();
+        then(placeRepository).should().findById(changedPlace.getId());
+        then(placeRepository).should().save(changedPlace);
+    }
+
+    @DisplayName("ID가 빠진 장소 정보를 주면, 장소 정보를 저장하고 결과를 true 로 보여준다.")
+    @Test
+    void givenPlaceWithoutId_whenUpserting_thenCreatesPlaceAndReturnsTrue() {
+        // Given
+        Place place = createPlace(null, PlaceType.PARTY, "무도회장");
+        given(placeRepository.save(any(Place.class))).willReturn(place);
+
+        // When
+        boolean result = sut.upsertPlace(PlaceDto.of(place));
+
+        // Then
+        assertThat(result).isTrue();
+        then(placeRepository).should(never()).findById(any());
+        then(placeRepository).should().save(any(Place.class));
+    }
+
 
     private Place createPlace(PlaceType placeType, String placeName) {
         return createPlace(1L, placeType, placeName);
     }
 
     private Place createPlace(
-            long id,
+            Long id,
             PlaceType placeType,
             String placeName
     ) {
