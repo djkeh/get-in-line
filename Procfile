@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -Dserver.port=$PORT -Dspring.profiles.active=default -jar build/libs/get-in-line-0.1.3-SNAPSHOT.jar
