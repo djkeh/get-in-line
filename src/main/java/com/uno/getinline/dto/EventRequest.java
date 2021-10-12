@@ -1,6 +1,7 @@
 package com.uno.getinline.dto;
 
 import com.uno.getinline.constant.EventStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,18 +10,18 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 public record EventRequest(
-        @NotNull @Positive Long placeId,
+        Long id,
         @NotBlank String eventName,
         @NotNull EventStatus eventStatus,
-        @NotNull LocalDateTime eventStartDatetime,
-        @NotNull LocalDateTime eventEndDatetime,
+        @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventStartDatetime,
+        @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventEndDatetime,
         @NotNull @PositiveOrZero Integer currentNumberOfPeople,
         @NotNull @Positive Integer capacity,
         String memo
 ) {
 
     public static EventRequest of(
-            Long placeId,
+            Long id,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -30,7 +31,7 @@ public record EventRequest(
             String memo
     ) {
         return new EventRequest(
-                placeId,
+                id,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -41,10 +42,10 @@ public record EventRequest(
         );
     }
 
-    public EventDto toDTO() {
+    public EventDto toDto(PlaceDto placeDto) {
         return EventDto.of(
-                null,
-                null, // TODO: 여기를 반드시 적절히 고쳐야 사용할 수 있음
+                this.id(),
+                placeDto,
                 this.eventName(),
                 this.eventStatus(),
                 this.eventStartDatetime(),

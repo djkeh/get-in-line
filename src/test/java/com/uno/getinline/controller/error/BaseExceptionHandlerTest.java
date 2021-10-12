@@ -6,6 +6,8 @@ import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.assertj.core.api.Assertions.as;
@@ -46,17 +48,19 @@ class BaseExceptionHandlerTest {
     void givenOtherException_whenHandlingException_thenReturnsModelAndView() {
         // Given
         Exception e = new Exception("This is error message.");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        response.setStatus(HttpStatus.FORBIDDEN.value());
 
         // When
-        ModelAndView result = sut.exception(e);
+        ModelAndView result = sut.exception(e, response);
 
         // Then
         assertThat(result)
                 .hasFieldOrPropertyWithValue("viewName", "error")
                 .extracting(ModelAndView::getModel, as(InstanceOfAssertFactories.MAP))
-                .containsEntry("statusCode", ErrorCode.INTERNAL_ERROR.getHttpStatus().value())
-                .containsEntry("errorCode", ErrorCode.INTERNAL_ERROR)
-                .containsEntry("message", ErrorCode.INTERNAL_ERROR.getMessage(e));
+                .containsEntry("statusCode", HttpStatus.FORBIDDEN.value())
+                .containsEntry("errorCode", ErrorCode.BAD_REQUEST)
+                .containsEntry("message", ErrorCode.BAD_REQUEST.getMessage(e));
     }
 
 }

@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-<title>Title</title>
+  <title>관리자 장소 리스트</title>
 </head>
 <body>
 <p>
-  This is admin places page.
+  <a id="logout">로그아웃</a>
 </p>
-<ul>
-  <li>placeType: <span th:text="${placeType} ?: _">?</span></li>
-  <li>placeName: <span th:text="${placeName} ?: _">?</span></li>
-  <li>address: <span th:text="${address} ?: _">?</span></li>
-</ul>
+<p>
+  <span id="placesTitle">This is admin places page.</span>
+</p>
+<table id="placesTable">
+  <thead>
+  <tr>
+    <th>장소 이름</th>
+    <th>전화번호</th>
+    <th>상세</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="placeName">테스트 이벤트</td>
+    <td class="phoneNumber">0</td>
+    <td><a>상세</a></td>
+  </tr>
+  </tbody>
+</table>
+<button id="newPlace" type="button">새 장소</button>
 </body>
 </html>

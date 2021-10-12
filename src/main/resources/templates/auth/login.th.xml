@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<thlogic>
+  <attr sel="#csrf" th:value="${_csrf.token}" th:name="${_csrf.parameterName}" />
+  <attr sel="#login" th:form="loginForm" th:formaction="@{/login}" th:formmethod="post" />
+</thlogic>

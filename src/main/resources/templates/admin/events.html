@@ -1,19 +1,41 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-<title>Title</title>
+  <title>관리자 이벤트 리스트</title>
 </head>
 <body>
 <p>
-  This is admin events page.
+  <a id="logout">로그아웃</a>
 </p>
-<ul>
-  <li>placeName: <span th:text="${placeName} ?: _">?</span></li>
-  <li>eventName: <span th:text="${eventName} ?: _">?</span></li>
-  <li>eventStatus: <span th:text="${eventStatus} ?: _">?</span></li>
-  <li>eventStartDatetime: <span th:text="${eventStartDatetime} ?: _">?</span></li>
-  <li>eventEndDatetime: <span th:text="${eventEndDatetime} ?: _">?</span></li>
-</ul>
+<p>
+  <span id="eventsTitle">This is admin events page.</span>
+</p>
+<table id="eventsTable">
+  <thead>
+  <tr>
+    <th>장소명</th>
+    <th>이벤트명</th>
+    <th>이벤트 상태</th>
+    <th>시작 일시</th>
+    <th>종료 일시</th>
+    <th>현재 인원</th>
+    <th>최대 수용 인원</th>
+    <th>상세</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="placeName">1</td>
+    <td class="eventName">테스트 이벤트</td>
+    <td class="eventStatus">OPENED</td>
+    <td class="eventStartDatetime">2021-01-01 09:00:00</td>
+    <td class="eventEndDatetime">2021-01-01 10:00:00</td>
+    <td class="currentNumberOfPeople">0</td>
+    <td class="capacity">10</td>
+    <td><a>상세</a></td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>
