@@ -1,6 +1,6 @@
 # 코로나 줄서기 - 입장 인원 카운팅 서비스
 
-[![GitKraken shield](https://img.shields.io/badge/GitKraken-Legendary%20Git%20Tools-teal?style=plastic&logo=gitkraken)](https://gitkraken.link/uno)
+[![GitKraken shield](https://img.shields.io/badge/GitKraken-Legendary%20Git%20Tools-teal?style=plastic&logo=gitkraken)](http://gitkraken.link/uno)
 
 This repo was made with love using [GitKraken Client](https://gitkraken.com/git-client).
 
