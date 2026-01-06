@@ -39,12 +39,6 @@ Spring Boot
 * Tailwind CSS
 * Heroku
 
-## 데모 페이지
-
-코로나 줄서기는 현재 개발이 진행 중입니다. 서비스 데모 페이지는 아래 링크에서 확인하실 수 있습니다.
-
-* https://fastcampus-getinline-test.herokuapp.com/
-
 ## 질문, 건의
 
 프로젝트에 관해 궁금하신 점이나 건의 사항이 있으시다면 아래 항목을 이용해 주세요.
